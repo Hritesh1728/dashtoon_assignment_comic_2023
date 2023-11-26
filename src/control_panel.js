@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './App.css';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 async function query(data) {
@@ -41,16 +41,13 @@ const ControlPanel = ({ imageData, setImageData, loading, setLoading }) => {
             console.log('Reset in progress. Skipping handleSubmit.');
             return;
         }
+
         const closeButton = document.querySelector('.btn-close');
         if (closeButton) {
             closeButton.click();
         }
-        // console.log('Stored Comic Texts:', comicTexts);
 
-        // Set loading to true to show the spinner
         setLoading(true);
-
-        // Reset previous stored images
         setImageData({});
 
         const requests = [];
@@ -74,7 +71,17 @@ const ControlPanel = ({ imageData, setImageData, loading, setLoading }) => {
         }
 
         try {
-            await Promise.all(requests);
+            const images = await Promise.all(requests);
+
+            // Sort the images based on the order of comicTexts
+            const sortedImageData = Object.entries(comicTexts).reduce((result, key, index) => {
+                result[key] = images[index];
+                return result;
+            }, {});
+
+            // Update imageData with sorted images
+            setImageData(sortedImageData);
+
             toast.success('Your comic is ready');
         } catch (error) {
             console.error('Error loading images:', error);
@@ -82,22 +89,6 @@ const ControlPanel = ({ imageData, setImageData, loading, setLoading }) => {
         } finally {
             setLoading(false);
         }
-
-        //rearrange the data in sequence
-        const sortedImageData = Object.entries(comicTexts).reduce((result, [key, value]) => {
-            if (imageData[value]) {
-                result[value] = imageData[value];
-            }
-            return result;
-        }, {});
-
-        // Clear ImageData
-        for (const key in imageData) {
-            delete imageData[key];
-        }
-
-        // Copy back the sorted entries to ImageData
-        Object.assign(imageData, sortedImageData);
     };
 
     const handleReset = () => {
@@ -124,19 +115,23 @@ const ControlPanel = ({ imageData, setImageData, loading, setLoading }) => {
     return (
         <>
             <div>
-                <button class="btn btn-success top-right-button" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
+                <button className="btn btn-info top-right-button" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
                     Create
                 </button>
-                <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
-                    <div class="offcanvas-header" >
-                        <h5 class="offcanvas-title" id="offcanvasExampleLabel">Create Your Ideas Into Comics!</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                <div className="offcanvas offcanvas-end" tabIndex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+                    <div className="offcanvas-header" >
+                        <h5 className="offcanvas-title" id="offcanvasExampleLabel">Create Your Ideas Into Comics!</h5>
+                        <button type="button" className="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                     </div>
-                    <div class="offcanvas-body">
+                    <div className="offcanvas-body">
                         <div className="animated-text">
                             <h3>Unleash your imagination <br />where words transform into comic wonders instantly.</h3>
                         </div>
-                        <div class="container mt-5">
+                        <div className="container mt-5">
                             <form id="comicForm" onSubmit={handleSubmit}>
                                 <div className="form-row mb-3">
                                     <div className="form-group col-md-12 d-flex justify-content-between align-items-center">
@@ -149,7 +144,7 @@ const ControlPanel = ({ imageData, setImageData, loading, setLoading }) => {
                                             onChange={handleNumberOfComicsChange}
                                         >
                                             {[...Array(11)].map((_, index) => (
-                                                <option key={index} value={index} disabled={index === 0} selected={index === 0}>
+                                                <option key={index} value={index} disabled={index === 0} defaultValue={index === 0}>
                                                     {index === 0 ? 'Select' : index}
                                                 </option>
                                             ))}
@@ -158,7 +153,7 @@ const ControlPanel = ({ imageData, setImageData, loading, setLoading }) => {
                                 </div>
                                 {[...Array(selectedNumberOfComics)].map((_, index) => (
                                     <div key={index} className="form-group" style={{
-                                        marginBottom: index === 9 ? '50px' : '10px',
+                                        marginBottom: index === selectedNumberOfComics - 1 ? '50px' : '10px',
                                     }}>
                                         <label htmlFor={`comicText${index + 1}`}>{`Text for Comic-Image ${index + 1}`}</label>
                                         <input
@@ -172,8 +167,8 @@ const ControlPanel = ({ imageData, setImageData, loading, setLoading }) => {
                                     </div>
                                 ))}
 
-                                <div className="row mt-5 d-flex align-items-center justify-content-end " id="fixedButtons">
-                                    <div className="col-auto button_gencomic">
+                                <div className="row mt-5 d-flex justify-content-end mb-3 fixed-bottom">
+                                    <div className="col-auto" style={{ marginRight: '15px' }}>
                                         <button
                                             type="submit"
                                             className="btn btn-primary"
@@ -182,7 +177,7 @@ const ControlPanel = ({ imageData, setImageData, loading, setLoading }) => {
                                             Generate Comic
                                         </button>
                                     </div>
-                                    <div className="col-auto" style={{marginRight:'20px'}}>
+                                    <div className="col-auto" style={{ marginRight: '50px', marginLeft: '50px' }}>
                                         <button
                                             type="button"
                                             className="btn btn-danger"

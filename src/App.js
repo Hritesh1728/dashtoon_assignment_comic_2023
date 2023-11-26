@@ -2,7 +2,7 @@ import './App.css';
 import React, { useState } from 'react';
 import ControlPanel from './control_panel.js';
 import Spinner from './spinner.js';
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 
@@ -15,9 +15,9 @@ const App = () => {
     <>
       <div className='background'>
         {Object.keys(imageData).length === 0 && loading === false ? (
-          <div class="container">
-            <div class="row">
-              <div class="neons col-12">
+          <div className="container">
+            <div className="row">
+              <div className="neons col-12">
                 <h1><em>Create your comic from text in three steps.</em></h1>
                 <ul>
                   <li>Click "Create"</li>
@@ -42,8 +42,7 @@ const App = () => {
                 ))}
               </ol>
               <div className="carousel-inner">
-                {Object.entries(imageData)
-                  .reverse() // Reverse the array
+                {Object.entries(imageData) // Reverse the array
                   .map(([text, image], index) => (
                     <div key={index} className={`carousel-item ${index === 0 ? 'active' : ''}`} data-bs-interval="10000">
                       <img
