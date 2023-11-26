@@ -255,7 +255,6 @@
 	position: fixed;
 	top: 20px;
 	right: 20px;
-	padding: 10px 15px;
 	font-size: 1.5rem;
 	color: white;
 	border: 2px solid rgba(0, 0, 0, 0.5);
@@ -295,83 +294,3 @@
 	  0 0 60px pink;
   }
   
-  /* .top-right-button span {
-	position: absolute;
-	background: yellow;
-	pointer-events: none;
-	border-radius: 2px;
-	box-shadow: 0 0 10px yellow,
-	  0 0 20px yellow,
-	  0 0 30px yellow,
-	  0 0 50px yellow,
-	  0 0 100px yellow;
-	transition: 0.5s ease-in-out;
-	transition-delay: 0.25s;
-  }
-  
-  .top-right-button:hover span {
-	opacity: 0;
-	transition-delay: 0s;
-  }
-  
-  .top-right-button span:nth-child(1),
-  .top-right-button span:nth-child(3) {
-	width: 40px;
-	height: 4px;
-  }
-  
-  .top-right-button:hover span:nth-child(1),
-  .top-right-button:hover span:nth-child(3) {
-	transform: translateX(0);
-  }
-  
-  .top-right-button span:nth-child(2),
-  .top-right-button span:nth-child(4) {
-	width: 4px;
-	height: 40px;
-  }
-  
-  .top-right-button:hover span:nth-child(1),
-  .top-right-button:hover span:nth-child(3) {
-	transform: translateY(0);
-  }
-  
-  .top-right-button span:nth-child(1) {
-	top: calc(50% - 2px);
-	left: -50px;
-	transform-origin: left;
-  }
-  
-  .top-right-button:hover span:nth-child(1) {
-	left: 50%;
-  }
-  
-  .top-right-button span:nth-child(3) {
-	top: calc(50% - 2px);
-	right: -50px;
-	transform-origin: right;
-  }
-  
-  .top-right-button:hover span:nth-child(3) {
-	right: 50%;
-  }
-  
-  .top-right-button span:nth-child(2) {
-	left: calc(50% - 2px);
-	top: -50px;
-	transform-origin: top;
-  }
-  
-  .top-right-button:hover span:nth-child(2) {
-	top: 50%;
-  }
-  
-  .top-right-button span:nth-child(4) {
-	left: calc(50% - 2px);
-	bottom: -50px;
-	transform-origin: bottom;
-  }
-  
-  .top-right-button:hover span:nth-child(4 ) {
-	bottom: 50%;
-  } */
