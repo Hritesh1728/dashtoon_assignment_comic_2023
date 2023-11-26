@@ -37,6 +37,7 @@ const App = () => {
                     data-bs-target="#carouselExampleInterval"
                     data-bs-slide-to={index}
                     className={index === 0 ? 'active' : ''}
+                    style={{listStyle:'none'}}
                   ></li>
                 ))}
               </ol>
